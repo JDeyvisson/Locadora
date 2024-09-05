@@ -1,0 +1,6 @@
+br\com\locadora\dao\UsuarioDAO.class
+br\com\locadora\model\Reserva.class
+br\com\locadora\model\Usuario.class
+br\com\locadora\model\Veiculo.class
+br\com\locadora\App.class
+br\com\locadora\controller\CadastroServlet.class
