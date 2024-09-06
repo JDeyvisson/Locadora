@@ -68,7 +68,7 @@
     <div class="container" id="login-form">
         <h2>Locadora de Carros</h2>
         <h2>Login</h2>
-        <form action="/login" method="POST">
+        <form action="login" method="POST">
             <div class="form-group">
                 <label for="login-email">Email:</label>
                 <input type="email" id="login-email" name="email" required>

@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -18,25 +19,38 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Recupera os parâmetros do formulário de login
+  
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // Verifica se o usuário existe e a senha está correta
+    
         Usuario usuario = usuarioDAO.findByEmail(email);
 
-        if (usuario != null && usuario.getSenha().equals(password)) {
-            // Cria uma nova sessão para o usuário
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", usuario);
+   
+        response.setContentType("text/html;charset=UTF-8");
 
-            // Redireciona para a página inicial após login bem-sucedido
-            response.sendRedirect("sucesso.jsp");
-        } else {
-            // Se o login falhar, redireciona de volta para a página de login com uma mensagem de erro
-            request.setAttribute("errorMessage", "Email ou senha incorretos.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            if (usuario != null && usuario.getSenha().equals(password)) {
+                
+                HttpSession session = request.getSession();
+                session.setAttribute("usuario", usuario);
+
+           
+                response.sendRedirect("menu");
+            } else {
+          
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Login Falhou</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<script type='text/javascript'>");
+                out.println("alert('Email ou senha incorretos.');");
+                out.println("window.location.href = 'login.jsp';");
+                out.println("</script>");
+                out.println("</body>");
+                out.println("</html>");
+            }
         }
     }
 }
-
