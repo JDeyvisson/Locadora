@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="imagens/caricon.png">
-    <title>Locadora de Carros</title>
+    <title>Login - Locadora de Carros</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -66,6 +66,7 @@
 </head>
 <body>
     <div class="container" id="login-form">
+        <h2>Locadora de Carros</h2>
         <h2>Login</h2>
         <form action="/login" method="POST">
             <div class="form-group">

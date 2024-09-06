@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="imagens/caricon.png">
-    <title>Cadastro de Usuário</title>
+    <title>Cadastro - Locadora de Carros</title>
     <style>
         * {
             box-sizing: border-box;
@@ -44,7 +44,8 @@
 
         input[type="text"],
         input[type="email"],
-        input[type="tel"] {
+        input[type="tel"],
+        input[type="password"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -67,16 +68,20 @@
             background-color: #555;
         }
     </style>
-</head>v
+</head>
 <body>
     <div class="form-container">
+        <h2>Locadora de Carros</h2>
         <h2>Cadastro de Usuário</h2>
-        <form name="frmUsuario" action="insert" method="post">
+        <form name="frmUsuario" action="cadastro" method="post">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" required>
 
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
+
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required>
 
             <label for="telefone">Telefone:</label>
             <input type="tel" id="telefone" name="telefone" required>

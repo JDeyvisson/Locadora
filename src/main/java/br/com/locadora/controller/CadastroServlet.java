@@ -3,14 +3,15 @@ package br.com.locadora.controller;
 import br.com.locadora.dao.UsuarioDAO;
 import br.com.locadora.model.Usuario;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 
-@WebServlet("/insert")
+@WebServlet("/cadastro")
 public class CadastroServlet extends HttpServlet {
 
     private UsuarioDAO usuarioDAO;
@@ -18,14 +19,15 @@ public class CadastroServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        usuarioDAO = new UsuarioDAO(); // Inicialize o DAO
+        usuarioDAO = new UsuarioDAO(); 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Obtendo os parâmetros do formulário
+     
         String nome = request.getParameter("nome");
         String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
         String telefone = request.getParameter("telefone");
         String cep = request.getParameter("cep");
         String rua = request.getParameter("rua");
@@ -33,10 +35,11 @@ public class CadastroServlet extends HttpServlet {
         String cidade = request.getParameter("cidade");
         String estado = request.getParameter("estado");
 
-        // Criando um novo usuário
+     
         Usuario usuario = new Usuario();
         usuario.setNome(nome);
         usuario.setEmail(email);
+        usuario.setSenha(senha);
         usuario.setTelefone(telefone);
         usuario.setEnderecoCep(cep);
         usuario.setEnderecoRua(rua);
@@ -44,10 +47,10 @@ public class CadastroServlet extends HttpServlet {
         usuario.setEnderecoCidade(cidade);
         usuario.setEnderecoEstado(estado);
 
-        // Salvando o usuário no banco de dados
+       
         usuarioDAO.save(usuario);
 
-        // Redirecionando para a página de login
-        response.sendRedirect("login.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+		rd.forward(request, response);
     }
 }

@@ -4,7 +4,9 @@ import javax.persistence.*;
 
 @Entity 
 public class Veiculo { 
+
     @Id 
+    @Column(length = 7) 
     private String placa; 
 
     private String marca; 
@@ -44,5 +46,7 @@ public class Veiculo {
     } 
 
     
+
+
 
 }

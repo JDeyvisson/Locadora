@@ -2,11 +2,12 @@ package br.com.locadora.dao;
 import br.com.locadora.model.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import java.util.List;
 
 public class UsuarioDAO {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("reservasPU");
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("locadora");
 
     public void save(Usuario usuario) {
         EntityManager em = emf.createEntityManager();
@@ -29,4 +30,19 @@ public class UsuarioDAO {
         em.close();
         return usuarios;
     }
+
+    public Usuario findByEmail(String email) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT u FROM Usuario u WHERE u.email = :email", Usuario.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null; // Usuário não encontrado
+        } finally {
+            em.close();
+        }
+    }
+
+
 }
