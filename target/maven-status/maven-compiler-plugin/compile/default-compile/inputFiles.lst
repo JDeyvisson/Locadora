@@ -4,7 +4,10 @@ C:\Users\josed\Locadora\locadora\src\main\java\br\com\locadora\model\Usuario.jav
 C:\Users\josed\Locadora\locadora\src\main\java\br\com\locadora\model\Reserva.java
 C:\Users\josed\Locadora\locadora\src\main\java\br\com\locadora\model\Veiculo.java
 C:\Users\josed\Locadora\locadora\src\main\java\br\com\locadora\controller\CadastroServlet.java
+C:\Users\josed\Locadora\locadora\src\main\java\br\com\locadora\dao\ReservaDAO.java
 C:\Users\josed\Locadora\locadora\src\main\java\br\com\locadora\dao\UsuarioDAO.java
 C:\Users\josed\Locadora\locadora\src\main\java\br\com\locadora\dao\VeiculoDAO.java
 C:\Users\josed\Locadora\locadora\src\main\java\br\com\locadora\controller\MenuServlet.java
+C:\Users\josed\Locadora\locadora\src\main\java\br\com\locadora\controller\ReservarCarroServlet.java
 C:\Users\josed\Locadora\locadora\src\main\java\br\com\locadora\App.java
+C:\Users\josed\Locadora\locadora\src\main\java\br\com\locadora\controller\RemoverCarroServlet.java

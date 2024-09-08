@@ -19,26 +19,20 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-  
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-    
         Usuario usuario = usuarioDAO.findByEmail(email);
 
-   
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
             if (usuario != null && usuario.getSenha().equals(password)) {
-                
                 HttpSession session = request.getSession();
                 session.setAttribute("usuario", usuario);
-
-           
+                session.setAttribute("usuarioId", usuario.getId()); 
                 response.sendRedirect("menu");
             } else {
-          
                 out.println("<html>");
                 out.println("<head>");
                 out.println("<title>Login Falhou</title>");

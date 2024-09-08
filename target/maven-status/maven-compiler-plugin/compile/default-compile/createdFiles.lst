@@ -1,8 +1,8 @@
 br\com\locadora\controller\AdicionarCarroServlet.class
 br\com\locadora\dao\UsuarioDAO.class
 br\com\locadora\model\Reserva.class
-br\com\locadora\model\Usuario.class
 br\com\locadora\controller\LoginServlet.class
+br\com\locadora\model\Usuario.class
 br\com\locadora\controller\MenuServlet.class
 br\com\locadora\model\Veiculo.class
 br\com\locadora\App.class

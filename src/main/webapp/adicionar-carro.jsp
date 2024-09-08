@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -88,7 +89,7 @@
             <button type="submit">Adicionar</button>
         </form>
         <div class="back-link">
-            <a href="menu.jsp" class="action-btn">Voltar para a Lista de Carros</a>
+            <a href="menu" class="action-btn">Voltar para a Lista de Carros</a>
         </div>
     </div>
 </body>

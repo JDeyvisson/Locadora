@@ -45,4 +45,22 @@ public class VeiculoDAO {
         }
     }
 
+    public void remover(String placa) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Veiculo veiculo = em.find(Veiculo.class, placa);
+            if (veiculo != null) {
+                em.remove(veiculo);
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e; 
+        } finally {
+            em.close();
+        }
+    }
+    
+
 }
