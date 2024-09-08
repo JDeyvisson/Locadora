@@ -88,6 +88,11 @@
             background-color: #c82333;
         }
 
+        .btn-remove[disabled] {
+            background-color: grey;
+            cursor: not-allowed;
+        }
+
         .btn-reserve {
             background-color: #007bff;
         }
@@ -110,7 +115,7 @@
         }
 
         .btn-reserve.reserved {
-            background-color: #dc3545; /* Vermelho */
+            background-color: #dc3545;
             color: #fff;
             cursor: not-allowed;
             text-decoration: none;
@@ -145,7 +150,10 @@
                             <td class="action-links">
                                 <form action="remover-carro" method="get">
                                     <input type="hidden" name="placa" value="<%= carro.getPlaca() %>">
-                                    <button type="submit" class="action-btn btn-remove">Remover</button>
+                                    <button type="submit" class="action-btn btn-remove" 
+                                        <%= carro.isReservado() ? "disabled" : "" %>>
+                                        Remover
+                                    </button>
                                 </form>
                                 
                                 <form action="reservar-carro" method="get">

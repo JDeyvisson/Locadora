@@ -9,56 +9,73 @@
     <link rel="icon" href="imagens/caricon.png">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eaeaea;
             margin: 0;
-            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
 
-        h1, h2 {
+        form {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h1 {
+            text-align: center;
             color: #333;
         }
 
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
+        section {
+            margin-bottom: 20px;
         }
 
         p {
-            margin: 10px 0;
             font-size: 16px;
+            color: #555;
         }
 
         input[type="date"] {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 4px;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
             border: 1px solid #ccc;
-            font-size: 16px;
+            box-sizing: border-box;
+            font-size: 15px;
         }
 
         button {
+            width: 100%;
+            padding: 12px;
             background-color: #4CAF50;
             color: white;
-            padding: 10px 15px;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            border-radius: 6px;
             font-size: 16px;
-            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
             background-color: #45a049;
+        }
+
+        .vehicle-info {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .vehicle-info p {
+            margin: 5px 0;
         }
     </style>
 </head>
@@ -66,25 +83,37 @@
     <form action="reservar-carro" method="post">
         <h1>Confirmar Reserva</h1>
 
-        <h2>Detalhes do Veículo</h2>
-        <p>
-            <% 
-                Veiculo veiculo = (Veiculo) request.getAttribute("veiculo");
-                if (veiculo != null) {
-                    out.println("Placa: " + veiculo.getPlaca() + "<br>");
-                    out.println("Marca: " + veiculo.getMarca() + "<br>");
-                    out.println("Modelo: " + veiculo.getModelo() + "<br>");
-                    out.println("Ano: " + veiculo.getAno() + "<br>");
-                    out.println("Cor: " + veiculo.getCor() + "<br>");
-                }
-            %>
-        </p>
+        <section class="vehicle-info">
+            <h2>Detalhes do Veículo</h2>
+            <p>
+                <% 
+                    Veiculo veiculo = (Veiculo) request.getAttribute("veiculo");
+                    if (veiculo != null) {
+                %>
+                    <strong>Placa:</strong> <%= veiculo.getPlaca() %><br>
+                    <strong>Marca:</strong> <%= veiculo.getMarca() %><br>
+                    <strong>Modelo:</strong> <%= veiculo.getModelo() %><br>
+                    <strong>Ano:</strong> <%= veiculo.getAno() %><br>
+                    <strong>Cor:</strong> <%= veiculo.getCor() %><br>
+                <% 
+                    } else { 
+                %>
+                    <p>Veículo não encontrado.</p>
+                <% 
+                    } 
+                %>
+            </p>
+        </section>
 
-        <h2>Data de Início</h2>
-        <input type="date" name="dataInicio" value="<%= request.getAttribute("dataInicio") %>" required>
+        <section>
+            <h2>Data de Início</h2>
+            <input type="date" name="dataInicio" value="<%= request.getAttribute("dataInicio") %>" required>
+        </section>
 
-        <h2>Data de Término</h2>
-        <input type="date" name="dataTermino" required>
+        <section>
+            <h2>Data de Término</h2>
+            <input type="date" name="dataTermino" required>
+        </section>
 
         <input type="hidden" name="placa" value="<%= veiculo != null ? veiculo.getPlaca() : "" %>">
 

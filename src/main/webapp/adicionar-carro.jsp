@@ -72,22 +72,22 @@
         <h1>Adicionar Carro</h1>
         <form action="adicionar" method="post">
             <label for="placa">Placa:</label>
-            <input type="text" id="placa" name="placa" required>
-
+            <input type="text" id="placa" name="placa" required maxlength="7">
+        
             <label for="ano">Ano:</label>
             <input type="number" id="ano" name="ano" required>
-
+        
             <label for="cor">Cor:</label>
             <input type="text" id="cor" name="cor" required>
-
+        
             <label for="marca">Marca:</label>
             <input type="text" id="marca" name="marca" required>
-
+        
             <label for="modelo">Modelo:</label>
             <input type="text" id="modelo" name="modelo" required>
-
+        
             <button type="submit">Adicionar</button>
-        </form>
+        </form>        
         <div class="back-link">
             <a href="menu" class="action-btn">Voltar para a Lista de Carros</a>
         </div>
