@@ -13,7 +13,14 @@ public class Veiculo {
     private String modelo; 
     private Integer ano; 
     private String cor;
+    private Boolean reservado = false;
     
+    public Boolean isReservado() { 
+        return reservado;
+    }
+    public void setReservado(Boolean reservado) {
+        this.reservado = reservado;
+    }
     public String getPlaca() {
         return placa;
     }

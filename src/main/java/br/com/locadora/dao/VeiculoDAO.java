@@ -62,5 +62,16 @@ public class VeiculoDAO {
         }
     }
     
+    public void update(Veiculo veiculo) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(veiculo); 
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
+        }
+    }
 
 }

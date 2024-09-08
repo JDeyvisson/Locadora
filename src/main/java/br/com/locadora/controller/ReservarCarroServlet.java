@@ -2,9 +2,9 @@ package br.com.locadora.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import br.com.locadora.dao.ReservaDAO;
-import br.com.locadora.dao.UsuarioDAO;
 import br.com.locadora.dao.VeiculoDAO;
 import br.com.locadora.model.Reserva;
 import br.com.locadora.model.Usuario;
@@ -20,41 +20,81 @@ import jakarta.servlet.http.HttpSession;
 public class ReservarCarroServlet extends HttpServlet {
 
     private VeiculoDAO veiculoDAO;
-    private UsuarioDAO usuarioDAO;
     private ReservaDAO reservaDAO;
 
     @Override
     public void init() throws ServletException {
-        veiculoDAO = new VeiculoDAO(); 
-        usuarioDAO = new UsuarioDAO(); 
-        reservaDAO = new ReservaDAO(); 
+        veiculoDAO = new VeiculoDAO();
+        reservaDAO = new ReservaDAO();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-        if (usuarioId == null) {
+        if (usuario == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
         String placa = request.getParameter("placa");
-
         Veiculo veiculo = veiculoDAO.findByPlaca(placa);
-        Usuario usuario = usuarioDAO.find(usuarioId);
 
-        if (veiculo != null && usuario != null) {
-            Reserva reserva = new Reserva();
-            reserva.setVeiculo(veiculo);
-            reserva.setUsuario(usuario);
-            reserva.setDataInicio(LocalDate.now());
-            reserva.setDataTermino(LocalDate.now().plusDays(7));
+        if (veiculo != null) {
+            LocalDate dataInicio = LocalDate.now();
+            request.setAttribute("veiculo", veiculo);
+            request.setAttribute("dataInicio", dataInicio);
+            request.getRequestDispatcher("reservar.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("menu");
+        }
+    }
 
-            reservaDAO.salvar(reserva);
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+        if (usuario == null) {
+            response.sendRedirect("login.jsp");
+            return;
         }
 
-        response.sendRedirect("menu");
+        String placa = request.getParameter("placa");
+        String dataInicioStr = request.getParameter("dataInicio");
+        String dataTerminoStr = request.getParameter("dataTermino");
+
+        Veiculo veiculo = veiculoDAO.findByPlaca(placa);
+
+        if (veiculo != null && dataTerminoStr != null) {
+            try {
+                LocalDate dataInicio = LocalDate.parse(dataInicioStr);
+                LocalDate dataTermino = LocalDate.parse(dataTerminoStr);
+
+                
+                if (!veiculo.isReservado()) {
+                    Reserva reserva = new Reserva();
+                    reserva.setVeiculo(veiculo);
+                    reserva.setUsuario(usuario);
+                    reserva.setDataInicio(dataInicio);
+                    reserva.setDataTermino(dataTermino);
+
+                    
+                    veiculo.setReservado(true);
+                    veiculoDAO.update(veiculo); 
+
+                    reservaDAO.salvar(reserva);
+
+                    response.sendRedirect("menu");
+                } else {
+                    response.sendRedirect("reservar-carro?placa=" + placa + "&erro=reservado");
+                }
+            } catch (DateTimeParseException e) {
+                response.sendRedirect("reservar-carro?placa=" + placa + "&erro=invalidDate");
+            }
+        } else {
+            response.sendRedirect("reservar-carro?placa=" + placa + "&erro=invalid");
+        }
     }
 }

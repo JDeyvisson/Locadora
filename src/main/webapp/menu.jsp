@@ -47,7 +47,6 @@
             transition: background-color 0.3s;
         }
 
-        
         .btn-add-car {
             background-color: #28a745;
         }
@@ -81,7 +80,6 @@
             background-color: #fff;
         }
 
-        
         .btn-remove {
             background-color: #dc3545;
         }
@@ -90,7 +88,6 @@
             background-color: #c82333;
         }
 
-       
         .btn-reserve {
             background-color: #007bff;
         }
@@ -99,7 +96,6 @@
             background-color: #0056b3;
         }
 
-       
         .btn-logout {
             background-color: #6c757d;
         }
@@ -108,13 +104,16 @@
             background-color: #5a6268;
         }
 
-        .action-links {
-            display: flex;
-            gap: 10px;
+        .reserved {
+            color: red;
+            font-weight: bold;
         }
 
-        form {
-            margin: 0;
+        .btn-reserve.reserved {
+            background-color: #dc3545;
+            color: #fff;
+            cursor: not-allowed;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -136,23 +135,26 @@
                     </tr>
                 </thead>
                 <tbody id="car-list">
-                   <% for (int i = 0; i < carros.size(); i++) { %>
+                    <% for (Veiculo carro : carros) { %>
                         <tr>
-                            <td><%=carros.get(i).getPlaca()%></td>
-                            <td><%=carros.get(i).getAno()%></td>
-                            <td><%=carros.get(i).getCor()%></td>
-                            <td><%=carros.get(i).getMarca()%></td>
-                            <td><%=carros.get(i).getModelo()%></td>
+                            <td><%= carro.getPlaca() %></td>
+                            <td><%= carro.getAno() %></td>
+                            <td><%= carro.getCor() %></td>
+                            <td><%= carro.getMarca() %></td>
+                            <td><%= carro.getModelo() %></td>
                             <td class="action-links">
-                                
                                 <form action="remover-carro" method="get">
-                                    <input type="hidden" name="placa" value="<%= carros.get(i).getPlaca() %>">
+                                    <input type="hidden" name="placa" value="<%= carro.getPlaca() %>">
                                     <button type="submit" class="action-btn btn-remove">Remover</button>
                                 </form>
                                 
                                 <form action="reservar-carro" method="get">
-                                    <input type="hidden" name="placa" value="<%= carros.get(i).getPlaca() %>">
-                                    <button type="submit" class="action-btn btn-reserve">Reservar</button>
+                                    <input type="hidden" name="placa" value="<%= carro.getPlaca() %>">
+                                    <% if (carro.isReservado()) { %>
+                                        <button type="button" class="action-btn btn-reserve reserved">Reservado</button>
+                                    <% } else { %>
+                                        <button type="submit" class="action-btn btn-reserve">Reservar</button>
+                                    <% } %>
                                 </form>
                             </td>
                         </tr>

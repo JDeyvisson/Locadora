@@ -5,6 +5,5 @@ br\com\locadora\controller\LoginServlet.class
 br\com\locadora\model\Usuario.class
 br\com\locadora\controller\MenuServlet.class
 br\com\locadora\model\Veiculo.class
-br\com\locadora\App.class
 br\com\locadora\dao\VeiculoDAO.class
 br\com\locadora\controller\CadastroServlet.class
