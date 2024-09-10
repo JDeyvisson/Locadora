@@ -6,6 +6,7 @@ import br.com.locadora.dao.VeiculoDAO;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
@@ -30,17 +31,30 @@ public class AdicionarCarroServlet extends HttpServlet {
         String marca = request.getParameter("marca");
         String modelo = request.getParameter("modelo");
         Integer ano = Integer.parseInt(anoStr);
-        Veiculo veiculo = new Veiculo();
 
+   
+        Veiculo veiculoExistente = veiculoDAO.findByPlaca(placa);
+        if (veiculoExistente != null) {
+            
+            request.setAttribute("mensagemErro", "A placa " + veiculoExistente.getPlaca() + " já está cadastrada!");
+            RequestDispatcher rd = request.getRequestDispatcher("/adicionar-carro.jsp");
+            rd.forward(request, response);
+            return; 
+        }
+
+        
+        Veiculo veiculo = new Veiculo();
         veiculo.setPlaca(placa);
         veiculo.setAno(ano);
         veiculo.setCor(cor);
         veiculo.setMarca(marca);
         veiculo.setModelo(modelo);
-        
 
+        
         veiculoDAO.save(veiculo);
+        
         
         response.sendRedirect("menu");
     }
 }
+

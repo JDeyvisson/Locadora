@@ -24,7 +24,6 @@ public class CadastroServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-     
         String nome = request.getParameter("nome");
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
@@ -34,23 +33,33 @@ public class CadastroServlet extends HttpServlet {
         String bairro = request.getParameter("bairro");
         String cidade = request.getParameter("cidade");
         String estado = request.getParameter("estado");
-
-     
-        Usuario usuario = new Usuario();
-        usuario.setNome(nome);
-        usuario.setEmail(email);
-        usuario.setSenha(senha);
-        usuario.setTelefone(telefone);
-        usuario.setEnderecoCep(cep);
-        usuario.setEnderecoRua(rua);
-        usuario.setEnderecoBairro(bairro);
-        usuario.setEnderecoCidade(cidade);
-        usuario.setEnderecoEstado(estado);
-
-       
-        usuarioDAO.save(usuario);
-
-        RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
-		rd.forward(request, response);
+    
+        
+        Usuario usuarioExistente = usuarioDAO.findByEmail(email);
+    
+        if (usuarioExistente != null) {
+           
+            request.setAttribute("mensagemErro", "Este e-mail já está cadastrado. Por favor, use outro.");
+            RequestDispatcher rd = request.getRequestDispatcher("/cadastro-usuario.jsp");
+            rd.forward(request, response);
+        } else {
+    
+            Usuario usuario = new Usuario();
+            usuario.setNome(nome);
+            usuario.setEmail(email);
+            usuario.setSenha(senha);
+            usuario.setTelefone(telefone);
+            usuario.setEnderecoCep(cep);
+            usuario.setEnderecoRua(rua);
+            usuario.setEnderecoBairro(bairro);
+            usuario.setEnderecoCidade(cidade);
+            usuario.setEnderecoEstado(estado);
+    
+            usuarioDAO.save(usuario);
+    
+            RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+            rd.forward(request, response);
+        }
     }
+    
 }

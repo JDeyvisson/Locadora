@@ -65,6 +65,13 @@
             text-align: center;
             margin-top: 20px;
         }
+        .mensagem-erro {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
     </style>
 </head>
 <body>
@@ -73,6 +80,9 @@
         <form action="adicionar" method="post">
             <label for="placa">Placa:</label>
             <input type="text" id="placa" name="placa" required maxlength="7">
+            <% if (request.getAttribute("mensagemErro") != null) { %>
+                <p class="mensagem-erro"><%= request.getAttribute("mensagemErro") %></p>
+            <% } %>
         
             <label for="ano">Ano:</label>
             <input type="number" id="ano" name="ano" required>

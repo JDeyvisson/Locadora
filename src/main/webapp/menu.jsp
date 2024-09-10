@@ -102,11 +102,11 @@
         }
 
         .btn-logout {
-            background-color: #6c757d;
+            background-color: #007bff;
         }
 
         .btn-logout:hover {
-            background-color: #5a6268;
+            background-color: #0056b3;
         }
 
         .reserved {

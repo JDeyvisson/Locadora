@@ -1,4 +1,6 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -80,15 +82,18 @@
 
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
+            <% if (request.getAttribute("mensagemErro") != null) { %>
+                <p style="color: red;"><%= request.getAttribute("mensagemErro") %></p>
+            <% } %>
 
             <label for="senha">Senha:</label>
             <input type="password" id="senha" name="senha" required>
 
             <label for="telefone">Telefone:</label>
-            <input type="tel" id="telefone" name="telefone" required>
+            <input type="tel" id="telefone" name="telefone" maxlength="15" required>
 
             <label for="cep">CEP:</label>
-            <input type="text" id="cep" name="cep" required>
+            <input type="text" id="cep" name="cep" maxlength="9" required>
 
             <label for="rua">Rua:</label>
             <input type="text" id="rua" name="rua" required>
