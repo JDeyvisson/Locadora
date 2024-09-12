@@ -170,7 +170,7 @@
                 </tbody>
             </table>
         </div>
-        
+        <a href="exibirReservas" class="action-btn btn-logout">Minhas Reservas</a>
         <a href="login.jsp" class="action-btn btn-logout">Sair</a>
     </div>
 </body>

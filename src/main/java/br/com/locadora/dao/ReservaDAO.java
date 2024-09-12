@@ -66,4 +66,17 @@ public class ReservaDAO {
             em.close();
         }
     }
+
+    public List<Reserva> buscarReservasPorUsuario(Long usuarioId) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Reserva> query = em.createQuery(
+                "SELECT r FROM Reserva r WHERE r.usuario.id = :usuarioId", Reserva.class);
+            query.setParameter("usuarioId", usuarioId);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
 }

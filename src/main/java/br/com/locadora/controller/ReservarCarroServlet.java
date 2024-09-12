@@ -71,6 +71,21 @@ public class ReservarCarroServlet extends HttpServlet {
             try {
                 LocalDate dataInicio = LocalDate.parse(dataInicioStr);
                 LocalDate dataTermino = LocalDate.parse(dataTerminoStr);
+                LocalDate dataAtual = LocalDate.now();
+
+
+                
+                if (dataInicio.isBefore(dataAtual)) {
+                   
+                    response.sendRedirect("reservar-carro?placa=" + placa + "&erro=dataInicioInvalida");
+                    return;
+                }
+
+                if (dataTermino.isBefore(dataInicio)) {
+                 
+                    response.sendRedirect("reservar-carro?placa=" + placa + "&erro=dataTerminoInvalida");
+                    return;
+                }
 
                 
                 if (!veiculo.isReservado()) {
@@ -80,17 +95,16 @@ public class ReservarCarroServlet extends HttpServlet {
                     reserva.setDataInicio(dataInicio);
                     reserva.setDataTermino(dataTermino);
 
-                    
                     veiculo.setReservado(true);
                     veiculoDAO.update(veiculo); 
-
-                    reservaDAO.salvar(reserva);
+                    reservaDAO.salvar(reserva); 
 
                     response.sendRedirect("menu");
                 } else {
                     response.sendRedirect("reservar-carro?placa=" + placa + "&erro=reservado");
                 }
             } catch (DateTimeParseException e) {
+                
                 response.sendRedirect("reservar-carro?placa=" + placa + "&erro=invalidDate");
             }
         } else {

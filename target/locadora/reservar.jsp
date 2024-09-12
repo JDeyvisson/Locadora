@@ -73,15 +73,46 @@
             border-radius: 8px;
             margin-bottom: 20px;
         }
-        
+
         .vehicle-info p {
             margin: 5px 0;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <form action="reservar-carro" method="post">
         <h1>Confirmar Reserva</h1>
+
+       
+        <%
+            String erro = request.getParameter("erro");
+            if (erro != null) {
+                if (erro.equals("dataInicioInvalida")) {
+        %>
+                    <div class="error-message">A data de início não pode ser anterior à data atual.</div>
+        <%
+                } else if (erro.equals("dataTerminoInvalida")) {
+        %>
+                    <div class="error-message">A data de término não pode ser anterior à data de início.</div>
+        <%
+                } else if (erro.equals("reservado")) {
+        %>
+                    <div class="error-message">O veículo já está reservado.</div>
+        <%
+                } else if (erro.equals("invalidDate")) {
+        %>
+                    <div class="error-message">Data inválida. Por favor, insira uma data correta.</div>
+        <%
+                }
+            }
+        %>
 
         <section class="vehicle-info">
             <h2>Detalhes do Veículo</h2>
